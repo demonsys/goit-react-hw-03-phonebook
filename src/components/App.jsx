@@ -14,6 +14,18 @@ class App extends Component {
     ],
     filter: '',
   };
+  componentDidMount() {
+    const contactList = localStorage.getItem('contacts');
+    const parsedContactList = JSON.parse(contactList);
+    if (parsedContactList) {
+      this.setState({ contacts: parsedContactList });
+    }
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
   // check is contact is alreadry in list
   isUnique = name => {
     return (
